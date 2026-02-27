@@ -1,0 +1,211 @@
+Build a complete, production-ready full-stack Mini CRM web application with a minimal, ultra-clean, white & professional green theme. The system should include authentication, lead tracking, note management, and a responsive dashboard UI using React + Tailwind, with a Node.js + Express + MongoDB backend following industry-standard architecture.
+⚙️ 1. GLOBAL INSTRUCTIONS (MANDATORY)
+Follow these requirements exactly:
+✔ Full-stack architecture (frontend + backend + database)
+✔ Pixel-perfect minimal UI (white + shades of green)
+✔ Strong backend structure (MVC pattern)
+✔ REST APIs fully implemented
+✔ MongoDB schema with validation
+✔ JWT Auth + bcrypt hashing
+✔ Tailwind UI with consistent components
+✔ Clean code, modular files, proper naming
+✔ Fully responsive layout
+✔ No unnecessary code, no placeholders
+✔ Include full folder structure
+✔ All code should be runnable as-is
+📁 2. PROJECT ARCHITECTURE (STRICT, DO NOT DEVIATE)
+
+mini-crm/
+│
+├── backend/
+│   ├── src/
+│   │   ├── config/db.js
+│   │   ├── controllers/
+│   │   │   ├── leadController.js
+│   │   │   └── authController.js
+│   │   ├── middleware/authMiddleware.js
+│   │   ├── models/
+│   │   │   ├── Lead.js
+│   │   │   └── User.js
+│   │   ├── routes/
+│   │   │   ├── leadRoutes.js
+│   │   │   └── authRoutes.js
+│   │   └── server.js
+│   ├── package.json
+│   └── .env
+│
+└── frontend/
+    ├── public/
+    ├── src/
+    │   ├── components/
+    │   │   ├── LeadTable.jsx
+    │   │   ├── AddLeadModal.jsx
+    │   │   ├── LeadDetails.jsx
+    │   │   └── Navbar.jsx
+    │   ├── pages/
+    │   │   ├── Login.jsx
+    │   │   └── Dashboard.jsx
+    │   ├── context/AuthContext.jsx
+    │   ├── api/axiosInstance.js
+    │   ├── hooks/useFetch.js
+    │   ├── App.jsx
+    │   ├── main.jsx
+    │   └── styles/globals.css
+    ├── package.json
+    └── vite.config.js
+🗄️ 3. DATABASE (MONGODB + MONGOOSE) — EXACT SCHEMA
+Lead Model (with validation + timestamps)
+
+Js
+import mongoose from "mongoose";
+
+const noteSchema = new mongoose.Schema({
+  text: { type: String, required: true, trim: true },
+  date: { type: Date, default: Date.now },
+});
+
+const leadSchema = new mongoose.Schema(
+  {
+    name: { type: String, required: true, trim: true },
+    email: { type: String, required: true, trim: true },
+    source: { type: String, required: true, trim: true },
+    status: {
+      type: String,
+      enum: ["new", "contacted", "converted"],
+      default: "new",
+    },
+    notes: [noteSchema],
+  },
+  { timestamps: true }
+);
+
+export default mongoose.model("Lead", leadSchema);
+User Model
+
+Js
+import mongoose from "mongoose";
+
+const userSchema = new mongoose.Schema({
+  username: { type: String, required: true, unique: true },
+  password: { type: String, required: true }, // hashed
+});
+
+export default mongoose.model("User", userSchema);
+🔌 4. BACKEND (Node.js + Express) — STRICT API CONTRACT
+AUTH ROUTES
+POST /api/auth/login
+Accepts username + password
+Validates credentials
+Returns JWT with expiry
+LEAD ROUTES (ALL PROTECTED BY JWT)
+GET /api/leads
+Return all leads sorted by createdAt
+POST /api/leads
+Create a new lead
+Validate all required fields
+GET /api/leads/:id
+Get specific lead
+PUT /api/leads/:id
+Update name, email, source, or status
+DELETE /api/leads/:id
+Remove lead
+POST /api/leads/:id/notes
+Add notes to lead
+🛡️ 5. BACKEND REQUIREMENTS
+Use bcryptjs for hashing passwords
+Use jsonwebtoken for JWT
+Use middleware to check token validity
+Use .env file for secrets
+Must include CORS setup
+Error handler required
+Use async/await everywhere
+No inline database logic inside routes
+🖥️ 6. FRONTEND (React + Tailwind) — STRICT UI GUIDELINES
+Theme
+Background: white
+Primary color: green-600 / green-700
+Accents: green-100, green-50
+Corners: rounded-xl
+Cards: soft shadow shadow-md
+Text: neutral, clean, bold headings
+🎨 Component Requirements
+Navbar.jsx
+White background
+Left: “Mini CRM” (green text, bold)
+Right: Logout button
+Sticky top with subtle shadow
+LeadTable.jsx
+Table layout
+Status pills:
+new → green-400
+contacted → yellow-400
+converted → emerald-600
+Actions column: View, Edit, Delete
+Hover row effect: hover:bg-green-50
+AddLeadModal.jsx
+White modal
+Green top border
+Form fields: name, email, source
+Submit button: green-600 → green-700 on hover
+LeadDetails.jsx
+Section for lead info
+Notes list (with timestamp)
+Add note field
+Status update dropdown
+📄 7. PAGES
+Login.jsx
+Centered card
+Input fields (white, green border)
+Login button (green)
+Show error messages
+Dashboard.jsx
+Navbar on top
+LeadTable in center
+Floating “+ Add Lead” button
+Modal triggered from button
+🔗 8. GLOBAL STATE MANAGEMENT
+Use AuthContext for:
+token
+login()
+logout()
+user authentication state
+Redirect user to /login if token invalid or missing.
+🌐 9. AXIOS INSTANCE
+Must include:
+baseURL
+Request interceptor → attach JWT
+Response interceptor → auto logout on 401
+🔁 10. HOOKS
+useFetch for GET, POST, PUT, DELETE with:
+loading state
+error handling
+success callback
+🧪 11. VALIDATION RULES
+On backend:
+Required fields cannot be empty
+Email format validation
+Status must match enum
+Notes must not be empty
+On frontend:
+Validate before POST
+Clean error alerts
+🚀 12. DELIVERABLES
+Emergent MUST generate:
+✔ Fully working backend
+✔ Fully working frontend
+✔ All APIs connected
+✔ Tailwind styling applied
+✔ Auth working end-to-end
+✔ CRUD for leads
+✔ CRUD for notes
+✔ Complete folder structure
+✔ Fully deployable build
+✔ Clean, readable code
+⛔ 13. THINGS NOT TO DO
+No dummy text
+No lorem ipsum
+No placeholder APIs
+No unused variables
+No spaghetti code
+No inline styling
+EVERYTHING must be functional.
